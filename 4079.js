@@ -1,0 +1,1 @@
+c=process.argv[2];console.log([...c].map((e,i)=>+e==e?'zero/one/two/three/four/five/six/seven/eight/nine/ten'.split('/')[e]||' ':(c.substr(i-1, 3)==' i ')?'I':!i?e.toUpperCase():e.toLowerCase()).join(''))
