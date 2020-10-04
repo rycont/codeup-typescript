@@ -1,4 +1,4 @@
-class Program {
+export class Program {
     width: number
     height: number
     x: number
@@ -13,7 +13,7 @@ class Program {
     }
 }
 
-class DesktopManager {
+export class DesktopManager {
     windows: Program[] = []
     display: string[] = Array(30).fill('.'.repeat(60))
     private insertAt(x: number, y: number, content: string) {
@@ -24,7 +24,8 @@ class DesktopManager {
         this.windows = [...this.windows, program]
         return {
             draw: () => {
-                this.insertAt(program.x, program.y, `+${program.name}${'-'.repeat(program.width - program.name.length - 1)}+`);
+                const adjeustedName = program.name.length > program.width - 2 ? program.name.substr(0, program.width - 1) : program.name
+                this.insertAt(program.x, program.y, `+${adjeustedName}${'-'.repeat(program.width - adjeustedName.length - 1)}+`);
                 [...Array(program.height - 2)].forEach((e, i) => this.insertAt(program.x, program.y + i + 1, '|' + ' '.repeat(program.width - 1) + '|'))
                 this.insertAt(program.x, program.y + program.height - 1, '+' + '-'.repeat(program.width - 1) + '+')
             }
@@ -34,9 +35,3 @@ class DesktopManager {
         console.log(this.display.join('\n'))
     }
 }
-
-const GUI = new DesktopManager()
-
-GUI.add(new Program('ChromeChrome', 2, 3, 18, 16)).draw()
-GUI.add(new Program('Benedu', 10, 8, 20, 13)).draw()
-GUI.print()
